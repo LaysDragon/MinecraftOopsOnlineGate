@@ -13,6 +13,7 @@ import (
 	"go.minekube.com/gate/pkg/edition/java/ping"
 	"go.minekube.com/gate/pkg/edition/java/proxy"
 	"go.minekube.com/gate/pkg/runtime/event"
+	"go.minekube.com/gate/pkg/util/favicon"
 	gateUUID "go.minekube.com/gate/pkg/util/uuid"
 	"os"
 )
@@ -65,6 +66,7 @@ type ServerStatus struct {
 		Name     string
 		Protocol int
 	}
+	Favicon string
 	//favicon ignored
 }
 
@@ -99,6 +101,8 @@ func (p *SimpleProxy) registerSubscribers() error {
 				Name: player.Name,
 			})
 		}
+
+		serverPing.Favicon = favicon.Favicon(status.Favicon)
 	})
 
 	return nil
