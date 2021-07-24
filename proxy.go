@@ -16,6 +16,7 @@ import (
 	"go.minekube.com/gate/pkg/util/favicon"
 	gateUUID "go.minekube.com/gate/pkg/util/uuid"
 	"os"
+	"time"
 )
 
 func main() {
@@ -78,7 +79,7 @@ func (p *SimpleProxy) registerSubscribers() error {
 		e := ev.(*proxy.PingEvent)
 
 		serverPing := e.Ping()
-		resp, _, err := bot.PingAndList(p.Servers()[0].ServerInfo().Addr().String())
+		resp, _, err := bot.PingAndListTimeout(p.Servers()[0].ServerInfo().Addr().String(), time.Second*1)
 
 		if err != nil {
 			serverPing.Description = &Text{Content: "Failed to ping server"}
